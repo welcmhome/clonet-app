@@ -13,14 +13,6 @@ export default function Home() {
     document.documentElement.style.background = gradient;
   }, [darkMode]);
 
-  const cardBg = darkMode ? 'rgba(28,30,36,0.92)' : 'rgba(255,255,255,0.85)';
-  const cardBorder = darkMode ? '1.5px solid #23243a' : '1.5px solid #eaf1ff';
-  const cardText = darkMode ? '#bfc3ca' : '#222';
-  const inputBg = darkMode ? '#23242a' : '#f9fafb';
-  const inputBorder = darkMode ? '#23243a' : '#e5e7eb';
-  const inputText = darkMode ? '#bfc3ca' : '#222';
-  const buttonBg = '#111';
-
   const loginFormStyle = {
     background: 'none',
     borderRadius: 0,
@@ -36,7 +28,7 @@ export default function Home() {
     position: 'relative' as const,
     justifyContent: 'center',
     boxSizing: 'border-box' as const,
-    color: cardText,
+    color: '#222',
     border: 'none',
     transition: 'none',
     backdropFilter: 'none',
@@ -51,7 +43,7 @@ export default function Home() {
         gap: '0.7rem',
         alignItems: 'center',
       }}>
-        <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: cardText, opacity: 0.95 }}>
+        <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: '#222', opacity: 0.95 }}>
           Log in to your account
         </h2>
         {/* Google login button */}
@@ -155,7 +147,7 @@ export default function Home() {
             {/* User icon */}
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
           </span>
-          <input placeholder="Email" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : inputText, fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <input placeholder="Email" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
         </div>
         {/* Password input */}
         <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
@@ -163,7 +155,7 @@ export default function Home() {
             {/* Lock icon */}
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M17 8V7a5 5 0 0 0-10 0v1a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-8-1a3 3 0 0 1 6 0v1H9V7zm8 11H7v-8h10v8z"/></svg>
           </span>
-          <input placeholder="Password" type="password" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : inputText, fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <input placeholder="Password" type="password" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
         </div>
         <a href="#" style={{ color: '#2563eb', fontSize: 14, alignSelf: 'flex-start', marginBottom: 2, marginTop: 2, textDecoration: 'none', fontFamily: 'Switzer, sans-serif', opacity: 0.95 }}>
           Don't remember your password?
