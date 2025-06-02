@@ -185,6 +185,7 @@ export default function Home() {
           <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 8, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
         <div style={{ position: 'absolute', right: 40, top: 18, fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'flex', alignItems: 'center' }}>
+          <span className="hide-on-mobile" style={{ color: darkMode ? '#ededed' : '#222', fontWeight: 400 }}>Don't have an account?</span>
           <a href="#" style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111', textDecoration: 'none', fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'inline-flex', alignItems: 'center', marginLeft: 8 }}>
             Sign up <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span>
           </a>
