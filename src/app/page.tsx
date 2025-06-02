@@ -159,7 +159,7 @@ export default function Home() {
           <input placeholder="Password" type="password" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
         </div>
         <a href="#" style={{ color: '#2563eb', fontSize: 14, alignSelf: 'flex-start', marginBottom: 2, marginTop: 2, textDecoration: 'none', fontFamily: 'Switzer, sans-serif', opacity: 0.95 }}>
-          Don't remember your password?
+          Don&#39;t remember your password?
         </a>
         <button className="login-btn" style={{ width: '100%', height: 46, borderRadius: 23, background: '#111', color: '#fff', fontWeight: 600, border: 'none', fontSize: 15, marginTop: 12, fontFamily: 'Switzer, sans-serif', transition: 'background 0.3s, box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)', boxShadow: '0 4px 16px 0 rgba(16,20,30,0.13)', letterSpacing: 0.01 }}>
           Log In
@@ -188,7 +188,7 @@ export default function Home() {
           <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 8, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
         <div style={{ position: 'absolute', right: 40, top: 18, fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'flex', alignItems: 'center' }}>
-          <span className="hide-on-mobile" style={{ color: darkMode ? '#ededed' : '#222', fontWeight: 400 }}>Don't have an account?</span>
+          <span className="hide-on-mobile" style={{ color: darkMode ? '#ededed' : '#222', fontWeight: 400 }}>Don&#39;t have an account?</span>
           <a href="#" style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111', textDecoration: 'none', fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'inline-flex', alignItems: 'center', marginLeft: 8 }}>
             Sign up <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span>
           </a>
