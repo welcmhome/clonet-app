@@ -33,12 +33,21 @@ html, body {
   min-width: 100vw !important;
   width: 100vw !important;
   height: 100vh !important;
+  height: 100dvh !important;
   background: var(--background) !important;
   background-attachment: fixed !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   color: var(--foreground);
   font-family: 'Switzer', Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
 }
