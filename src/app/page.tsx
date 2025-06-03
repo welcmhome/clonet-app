@@ -45,7 +45,7 @@ export default function Home() {
     async function handleOAuth(provider: 'google' | 'github') {
       setError('');
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOAuth({ provider });
+      const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + '/dashboard' } });
       if (error) setError(error.message);
       setLoading(false);
     }
@@ -54,8 +54,9 @@ export default function Home() {
       e.preventDefault();
       setError('');
       setLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
+      else window.location.href = '/dashboard';
       setLoading(false);
     }
 
