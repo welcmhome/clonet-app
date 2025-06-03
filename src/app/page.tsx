@@ -169,6 +169,9 @@ export default function Home() {
     <div
       style={{
         minHeight: '100vh',
+        minWidth: '100vw',
+        width: '100vw',
+        height: '100vh',
         background: darkMode
           ? 'linear-gradient(180deg, #181a20 0%, #23242a 100%)'
           : 'linear-gradient(180deg, #f8fafc 0%, #eaf1ff 40%, #f8fafc 100%)',
@@ -177,6 +180,9 @@ export default function Home() {
         flexDirection: 'column' as const,
         fontFamily: 'Switzer, sans-serif',
         transition: 'background 0.3s, color 0.3s',
+        margin: 0,
+        padding: 0,
+        boxSizing: 'border-box' as const,
       }}
     >
       {/* Header with clonet. in ibrand font */}
