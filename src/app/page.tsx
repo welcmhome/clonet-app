@@ -180,11 +180,11 @@ export default function Home() {
       }}
     >
       {/* Header with clonet. in ibrand font */}
-      <div style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
-        <a href="https://clonet.ai" style={{ textDecoration: 'none' }}>
-          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 8, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
+      <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
+        <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
-        <div style={{ position: 'absolute', right: 40, top: 18, fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'flex', alignItems: 'center' }}>
+        <div className="header-signup" style={{ fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
           <span className="hide-on-mobile" style={{ color: darkMode ? '#ededed' : '#222', fontWeight: 400 }}>Don't have an account?</span>
           <a href="#" style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111', textDecoration: 'none', fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'inline-flex', alignItems: 'center', marginLeft: 8 }}>
             Sign up <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span>
@@ -262,11 +262,25 @@ export default function Home() {
       `}</style>
       <style jsx>{`
         @media (max-width: 600px) {
-          .hide-on-mobile {
-            display: none !important;
+          .header-row {
+            padding: 0 12px !important;
+            height: 64px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            position: relative !important;
+          }
+          .header-row a span {
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            font-size: 24px !important;
           }
           .header-signup {
+            position: static !important;
             margin-left: 0 !important;
+            margin-top: 0 !important;
+            display: flex !important;
+            align-items: center !important;
           }
         }
       `}</style>
