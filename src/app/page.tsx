@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
@@ -36,8 +37,30 @@ export default function Home() {
   };
 
   function LoginFormSingle() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    async function handleOAuth(provider: 'google' | 'github') {
+      setError('');
+      setLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({ provider });
+      if (error) setError(error.message);
+      setLoading(false);
+    }
+
+    async function handleEmailLogin(e: React.FormEvent) {
+      e.preventDefault();
+      setError('');
+      setLoading(true);
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) setError(error.message);
+      setLoading(false);
+    }
+
     return (
-      <form onSubmit={e => e.preventDefault()} style={{
+      <form onSubmit={handleEmailLogin} style={{
         ...loginFormStyle,
         width: 360,
         padding: 0,
@@ -47,6 +70,7 @@ export default function Home() {
         <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
           Log in to your account
         </h2>
+        {error && <div style={{ color: '#e11d48', fontSize: 14, marginBottom: 6 }}>{error}</div>}
         {/* Google login button */}
         <button type="button" className="login-btn" style={{
           width: '100%',
@@ -62,7 +86,7 @@ export default function Home() {
           padding: 0,
           transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
           overflow: 'hidden',
-        }}>
+        }} onClick={() => handleOAuth('google')} disabled={loading}>
           <span style={{
             width: '12%',
             height: '100%',
@@ -112,7 +136,7 @@ export default function Home() {
           padding: 0,
           transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
           overflow: 'hidden',
-        }}>
+        }} onClick={() => handleOAuth('github')} disabled={loading}>
           <span style={{
             width: '12%',
             height: '100%',
@@ -148,7 +172,7 @@ export default function Home() {
             {/* User icon */}
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
           </span>
-          <input placeholder="Email" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
         </div>
         {/* Password input */}
         <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
@@ -156,9 +180,9 @@ export default function Home() {
             {/* Lock icon */}
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M17 8V7a5 5 0 0 0-10 0v1a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-8-1a3 3 0 0 1 6 0v1H9V7zm8 11H7v-8h10v8z"/></svg>
           </span>
-          <input placeholder="Password" type="password" style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
         </div>
-        <button className="login-btn" style={{ width: '100%', height: 46, borderRadius: 23, background: '#111', color: '#fff', fontWeight: 600, border: 'none', fontSize: 15, marginTop: 12, fontFamily: 'Switzer, sans-serif', transition: 'background 0.3s, box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)', boxShadow: '0 4px 16px 0 rgba(16,20,30,0.13)', letterSpacing: 0.01 }}>
+        <button className="login-btn" style={{ width: '100%', height: 46, borderRadius: 23, background: '#111', color: '#fff', fontWeight: 600, border: 'none', fontSize: 15, marginTop: 12, fontFamily: 'Switzer, sans-serif', transition: 'background 0.3s, box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)', boxShadow: '0 4px 16px 0 rgba(16,20,30,0.13)', letterSpacing: 0.01 }} disabled={loading}>
           Log In
         </button>
       </form>
