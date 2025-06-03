@@ -44,7 +44,7 @@ export default function Home() {
         gap: '0.7rem',
         alignItems: 'center',
       }}>
-        <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: '#222', opacity: 0.95 }}>
+        <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
           Log in to your account
         </h2>
         {/* Google login button */}
