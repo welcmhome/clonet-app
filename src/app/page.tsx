@@ -27,6 +27,8 @@ export default function Home() {
           .select('approved')
           .eq('id', user.id)
           .single();
+        // Debug log
+        console.log('DEBUG approval check:', { user, data, error });
         if (error || !data || !data.approved) {
           await supabase.auth.signOut();
           setError('Invalid login credentials. Please wait for approval.');
