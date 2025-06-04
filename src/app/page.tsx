@@ -23,7 +23,7 @@ export default function Home() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data, error } = await supabase
-          .from('users')
+          .from('profiles')
           .select('approved')
           .eq('id', user.id)
           .single();
@@ -199,7 +199,7 @@ export default function Home() {
       }
       // Approval check for email login only (since no redirect)
       const { data: approvalData, error: approvalError } = await supabase
-        .from('users')
+        .from('profiles')
         .select('approved')
         .eq('id', data.user.id)
         .single();
