@@ -7,6 +7,8 @@ import { supabase } from '@/utils/supabaseClient';
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const gradient = darkMode
@@ -15,6 +17,26 @@ export default function Home() {
     document.body.style.background = gradient;
     document.documentElement.style.background = gradient;
   }, [darkMode]);
+
+  useEffect(() => {
+    async function checkIfLoggedInAndApproved() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data, error } = await supabase
+          .from('users')
+          .select('approved')
+          .eq('id', user.id)
+          .single();
+        if (error || !data || !data.approved) {
+          await supabase.auth.signOut();
+          setError('Invalid login credentials. Please wait for approval.');
+        } else {
+          window.location.href = '/dashboard';
+        }
+      }
+    }
+    checkIfLoggedInAndApproved();
+  }, []);
 
   const loginFormStyle = {
     background: 'none',
@@ -40,8 +62,6 @@ export default function Home() {
   function LoginFormSingle() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
     // --- Style objects reused for both login and signup forms ---
     const googleBtnStyle = {
@@ -157,40 +177,11 @@ export default function Home() {
       letterSpacing: 0.01,
     };
 
-    async function checkApproval(userId: string) {
-      // Query the 'users' table for approval
-      const { data, error } = await supabase
-        .from('users')
-        .select('approved')
-        .eq('id', userId)
-        .single();
-      if (error || !data || !data.approved) return false;
-      return true;
-    }
-
     async function handleOAuth(provider: 'google' | 'github') {
       setError('');
       setLoading(true);
-      const { data, error } = await supabase.auth.signInWithOAuth({ provider });
-      if (error) {
-        setError('Invalid login credentials. Please wait for approval.');
-        setLoading(false);
-        return;
-      }
-      // Wait for redirect and session
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session || !session.user) {
-        setError('Invalid login credentials. Please wait for approval.');
-        setLoading(false);
-        return;
-      }
-      const approved = await checkApproval(session.user.id);
-      if (approved) {
-        window.location.href = '/dashboard';
-      } else {
-        await supabase.auth.signOut();
-        setError('Invalid login credentials. Please wait for approval.');
-      }
+      // Only trigger the OAuth popup/redirect, do not check approval here
+      await supabase.auth.signInWithOAuth({ provider });
       setLoading(false);
     }
 
@@ -204,13 +195,19 @@ export default function Home() {
         setLoading(false);
         return;
       }
-      const approved = await checkApproval(data.user.id);
-      if (approved) {
-        window.location.href = '/dashboard';
-      } else {
+      // Approval check for email login only (since no redirect)
+      const { data: approvalData, error: approvalError } = await supabase
+        .from('users')
+        .select('approved')
+        .eq('id', data.user.id)
+        .single();
+      if (approvalError || !approvalData || !approvalData.approved) {
         await supabase.auth.signOut();
         setError('Invalid login credentials. Please wait for approval.');
+        setLoading(false);
+        return;
       }
+      window.location.href = '/dashboard';
       setLoading(false);
     }
 
