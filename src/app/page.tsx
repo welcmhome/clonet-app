@@ -6,6 +6,7 @@ import { supabase } from '@/utils/supabaseClient';
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   useEffect(() => {
     const gradient = darkMode
@@ -42,11 +43,153 @@ export default function Home() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    async function handleOAuth(provider: 'google' | 'github') {
+    // --- Style objects reused for both login and signup forms ---
+    const googleBtnStyle = {
+      width: '100%',
+      height: 46,
+      display: 'flex',
+      alignItems: 'center',
+      background: 'none',
+      border: 'none',
+      borderRadius: 23,
+      boxShadow: darkMode ? '0 2px 8px 0 rgba(0,0,0,0.18)' : '0 4px 16px 0 rgba(16,20,30,0.13)',
+      cursor: 'pointer',
+      marginBottom: 10,
+      padding: 0,
+      transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
+      overflow: 'hidden',
+    };
+    const googleIconStyle = {
+      width: '12%',
+      height: '100%',
+      background: darkMode ? '#f3f4f6' : '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+    const googleTextStyle = {
+      width: '88%',
+      height: '100%',
+      background: '#4285F4',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      paddingLeft: 14,
+    };
+    const githubBtnStyle = {
+      width: '100%',
+      height: 46,
+      display: 'flex',
+      alignItems: 'center',
+      background: 'none',
+      border: 'none',
+      borderRadius: 23,
+      boxShadow: darkMode ? '0 2px 8px 0 rgba(0,0,0,0.18)' : '0 4px 16px 0 rgba(16,20,30,0.13)',
+      cursor: 'pointer',
+      marginBottom: 22,
+      padding: 0,
+      transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
+      overflow: 'hidden',
+    };
+    const githubIconStyle = {
+      width: '12%',
+      height: '100%',
+      background: darkMode ? '#23242a' : '#44474f',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+    const githubTextStyle = {
+      width: '88%',
+      height: '100%',
+      background: '#232323',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      paddingLeft: 14,
+    };
+    const userIconStyle = {
+      position: 'absolute' as const,
+      left: 13,
+      top: '50%',
+      transform: 'translateY(-50%)',
+      color: darkMode ? '#aab0bb' : '#888',
+      opacity: 0.9,
+    };
+    const lockIconStyle = {
+      position: 'absolute' as const,
+      left: 13,
+      top: '50%',
+      transform: 'translateY(-50%)',
+      color: darkMode ? '#aab0bb' : '#888',
+      opacity: 0.9,
+    };
+    const inputStyle = {
+      width: '100%',
+      height: 46,
+      padding: '0 0 0 38px',
+      borderRadius: 23,
+      border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb',
+      background: darkMode ? '#23242a' : '#f5f7fa',
+      color: darkMode ? '#fff' : '#222',
+      fontSize: 15,
+      fontFamily: 'Switzer, sans-serif',
+      marginBottom: 0,
+      transition: 'background 0.3s, color 0.3s, border 0.3s',
+      boxSizing: 'border-box' as const,
+      fontWeight: 400,
+    };
+    const loginBtnStyle = {
+      width: '100%',
+      height: 46,
+      borderRadius: 23,
+      background: '#111',
+      color: '#fff',
+      fontWeight: 600,
+      border: 'none',
+      fontSize: 15,
+      marginTop: 12,
+      fontFamily: 'Switzer, sans-serif',
+      transition: 'background 0.3s, box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
+      boxShadow: '0 4px 16px 0 rgba(16,20,30,0.13)',
+      letterSpacing: 0.01,
+    };
+
+    async function checkApproval(userId: string) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('approved')
+        .eq('id', userId)
+        .single();
+      if (error || !data || !data.approved) return false;
+      return true;
+    }
+
+    async function handleOAuth(provider: 'google' | 'github', isSignup = false) {
       setError('');
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + '/dashboard' } });
-      if (error) setError(error.message);
+      const { data, error } = await supabase.auth.signInWithOAuth({ provider });
+      if (error) {
+        setError('Invalid login credentials');
+        setLoading(false);
+        return;
+      }
+      // Wait for redirect and session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session || !session.user) {
+        setError('Invalid login credentials');
+        setLoading(false);
+        return;
+      }
+      const approved = await checkApproval(session.user.id);
+      if (approved) {
+        window.location.href = '/dashboard';
+      } else {
+        await supabase.auth.signOut();
+        setError('Invalid login credentials');
+      }
       setLoading(false);
     }
 
@@ -55,137 +198,100 @@ export default function Home() {
       setError('');
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setError(error.message);
-      else window.location.href = '/dashboard';
+      if (error || !data || !data.user) {
+        setError('Invalid login credentials');
+        setLoading(false);
+        return;
+      }
+      const approved = await checkApproval(data.user.id);
+      if (approved) {
+        window.location.href = '/dashboard';
+      } else {
+        await supabase.auth.signOut();
+        setError('Invalid login credentials');
+      }
       setLoading(false);
     }
 
+    async function handleEmailSignup(e: React.FormEvent) {
+      e.preventDefault();
+      setError('');
+      setLoading(true);
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) setError(error.message);
+      else setError('Request submitted! You will be notified once approved.');
+      setLoading(false);
+    }
+
+    if (showSignup) {
+      // SIGNUP/REQUEST CREDENTIALS FORM
+      return (
+        <form onSubmit={handleEmailSignup} style={{ ...loginFormStyle, width: 360, padding: 0, gap: '0.7rem', alignItems: 'center' }}>
+          <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
+            Request Credentials
+          </h2>
+          {error && <div style={{ color: error.includes('submitted') ? '#22c55e' : '#e11d48', fontSize: 14, marginBottom: 6 }}>{error}</div>}
+          <button type="button" className="login-btn" style={{ ...googleBtnStyle }} onClick={() => handleOAuth('google', true)} disabled={loading}>
+            <span style={{ ...googleIconStyle }}>{/* Google SVG */}</span>
+            <span style={{ ...googleTextStyle }}>Request credentials with Google</span>
+          </button>
+          <button type="button" className="login-btn" style={{ ...githubBtnStyle }} onClick={() => handleOAuth('github', true)} disabled={loading}>
+            <span style={{ ...githubIconStyle }}>{/* GitHub SVG */}</span>
+            <span style={{ ...githubTextStyle }}>Request credentials with GitHub</span>
+          </button>
+          <div style={{ width: '100%', display: 'flex', alignItems: 'center', margin: '7px 0 2px 0' }}>
+            <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
+            <span style={{ margin: '0 12px', color: darkMode ? '#aab0bb' : '#888', fontSize: 14, fontWeight: 400, opacity: 0.9 }}>or</span>
+            <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
+          </div>
+          <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
+            <span style={{ ...userIconStyle }}>{/* User icon */}</span>
+            <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} />
+          </div>
+          <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
+            <span style={{ ...lockIconStyle }}>{/* Lock icon */}</span>
+            <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} />
+          </div>
+          <button className="login-btn" style={loginBtnStyle} disabled={loading}>Request Credentials</button>
+          <div style={{ marginTop: 10, fontSize: 14, color: darkMode ? '#ededed' : '#222', cursor: 'pointer' }} onClick={() => setShowSignup(false)}>
+            Back to Log In
+          </div>
+        </form>
+      );
+    }
+
+    // LOGIN FORM (default)
     return (
-      <form onSubmit={handleEmailLogin} style={{
-        ...loginFormStyle,
-        width: 360,
-        padding: 0,
-        gap: '0.7rem',
-        alignItems: 'center',
-      }}>
+      <form onSubmit={handleEmailLogin} style={{ ...loginFormStyle, width: 360, padding: 0, gap: '0.7rem', alignItems: 'center' }}>
         <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
           Log in to your account
         </h2>
         {error && <div style={{ color: '#e11d48', fontSize: 14, marginBottom: 6 }}>{error}</div>}
-        {/* Google login button */}
-        <button type="button" className="login-btn" style={{
-          width: '100%',
-          height: 46,
-          display: 'flex',
-          alignItems: 'center',
-          background: 'none',
-          border: 'none',
-          borderRadius: 23,
-          boxShadow: darkMode ? '0 2px 8px 0 rgba(0,0,0,0.18)' : '0 4px 16px 0 rgba(16,20,30,0.13)',
-          cursor: 'pointer',
-          marginBottom: 10,
-          padding: 0,
-          transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
-          overflow: 'hidden',
-        }} onClick={() => handleOAuth('google')} disabled={loading}>
-          <span style={{
-            width: '12%',
-            height: '100%',
-            background: darkMode ? '#f3f4f6' : '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <title>Google G Logo</title>
-              <clipPath id="g">
-                <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/>
-              </clipPath>
-              <g clipPath="url(#g)">
-                <path fill="#FBBC05" d="M0 37V11l17 13z"/>
-                <path fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/>
-                <path fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/>
-                <path fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
-              </g>
-            </svg>
-          </span>
-          <span style={{
-            width: '88%',
-            height: '100%',
-            background: '#4285F4',
-            color: '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            paddingLeft: 14,
-          }}>
-            Log in with Google
-          </span>
+        <button type="button" className="login-btn" style={{ ...googleBtnStyle }} onClick={() => handleOAuth('google')} disabled={loading}>
+          <span style={{ ...googleIconStyle }}>{/* Google SVG */}</span>
+          <span style={{ ...googleTextStyle }}>Log in with Google</span>
         </button>
-        {/* GitHub login button */}
-        <button type="button" className="login-btn" style={{
-          width: '100%',
-          height: 46,
-          display: 'flex',
-          alignItems: 'center',
-          background: 'none',
-          border: 'none',
-          borderRadius: 23,
-          boxShadow: darkMode ? '0 2px 8px 0 rgba(0,0,0,0.18)' : '0 4px 16px 0 rgba(16,20,30,0.13)',
-          cursor: 'pointer',
-          marginBottom: 22,
-          padding: 0,
-          transition: 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)',
-          overflow: 'hidden',
-        }} onClick={() => handleOAuth('github')} disabled={loading}>
-          <span style={{
-            width: '12%',
-            height: '100%',
-            background: darkMode ? '#23242a' : '#44474f',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill="#fff" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.17-1.1-1.48-1.1-1.48-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85.004 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"/></svg>
-          </span>
-          <span style={{
-            width: '88%',
-            height: '100%',
-            background: '#232323',
-            color: '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            paddingLeft: 14,
-          }}>
-            Log in with GitHub
-          </span>
+        <button type="button" className="login-btn" style={{ ...githubBtnStyle }} onClick={() => handleOAuth('github')} disabled={loading}>
+          <span style={{ ...githubIconStyle }}>{/* GitHub SVG */}</span>
+          <span style={{ ...githubTextStyle }}>Log in with GitHub</span>
         </button>
-        {/* Divider */}
         <div style={{ width: '100%', display: 'flex', alignItems: 'center', margin: '7px 0 2px 0' }}>
           <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
           <span style={{ margin: '0 12px', color: darkMode ? '#aab0bb' : '#888', fontSize: 14, fontWeight: 400, opacity: 0.9 }}>or</span>
           <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
         </div>
-        {/* Email input */}
         <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
-          <span style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: darkMode ? '#aab0bb' : '#888', opacity: 0.9 }}>
-            {/* User icon */}
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-          </span>
-          <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <span style={{ ...userIconStyle }}>{/* User icon */}</span>
+          <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} />
         </div>
-        {/* Password input */}
         <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
-          <span style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: darkMode ? '#aab0bb' : '#888', opacity: 0.9 }}>
-            {/* Lock icon */}
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill={darkMode ? '#aab0bb' : '#888'} d="M17 8V7a5 5 0 0 0-10 0v1a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-8-1a3 3 0 0 1 6 0v1H9V7zm8 11H7v-8h10v8z"/></svg>
-          </span>
-          <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', height: 46, padding: '0 0 0 38px', borderRadius: 23, border: darkMode ? '1px solid #35373f' : '1px solid #e5e7eb', background: darkMode ? '#23242a' : '#f5f7fa', color: darkMode ? '#fff' : '#222', fontSize: 15, fontFamily: 'Switzer, sans-serif', marginBottom: 0, transition: 'background 0.3s, color 0.3s, border 0.3s', boxSizing: 'border-box', fontWeight: 400 }} />
+          <span style={{ ...lockIconStyle }}>{/* Lock icon */}</span>
+          <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} />
         </div>
-        <button className="login-btn" style={{ width: '100%', height: 46, borderRadius: 23, background: '#111', color: '#fff', fontWeight: 600, border: 'none', fontSize: 15, marginTop: 12, fontFamily: 'Switzer, sans-serif', transition: 'background 0.3s, box-shadow 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1)', boxShadow: '0 4px 16px 0 rgba(16,20,30,0.13)', letterSpacing: 0.01 }} disabled={loading}>
-          Log In
-        </button>
+        <button className="login-btn" style={loginBtnStyle} disabled={loading}>Log In</button>
+        <div style={{ marginTop: 10, fontSize: 14, color: darkMode ? '#ededed' : '#222', cursor: 'pointer' }} onClick={() => setShowSignup(true)}>
+          Don't have an account? <span style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111' }}>Request Credentials <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span></span>
+        </div>
       </form>
     );
   }
