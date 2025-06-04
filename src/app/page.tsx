@@ -158,8 +158,9 @@ export default function Home() {
     };
 
     async function checkApproval(userId: string) {
+      // Query the 'users' table for approval
       const { data, error } = await supabase
-        .from('profiles')
+        .from('users')
         .select('approved')
         .eq('id', userId)
         .single();
@@ -167,19 +168,19 @@ export default function Home() {
       return true;
     }
 
-    async function handleOAuth(provider: 'google' | 'github', isSignup = false) {
+    async function handleOAuth(provider: 'google' | 'github') {
       setError('');
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithOAuth({ provider });
       if (error) {
-        setError('Invalid login credentials');
+        setError('Invalid login credentials. Please wait for approval.');
         setLoading(false);
         return;
       }
       // Wait for redirect and session
       const { data: { session } } = await supabase.auth.getSession();
       if (!session || !session.user) {
-        setError('Invalid login credentials');
+        setError('Invalid login credentials. Please wait for approval.');
         setLoading(false);
         return;
       }
@@ -188,7 +189,7 @@ export default function Home() {
         window.location.href = '/dashboard';
       } else {
         await supabase.auth.signOut();
-        setError('Invalid login credentials');
+        setError('Invalid login credentials. Please wait for approval.');
       }
       setLoading(false);
     }
@@ -199,7 +200,7 @@ export default function Home() {
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error || !data || !data.user) {
-        setError('Invalid login credentials');
+        setError('Invalid login credentials. Please wait for approval.');
         setLoading(false);
         return;
       }
@@ -208,80 +209,16 @@ export default function Home() {
         window.location.href = '/dashboard';
       } else {
         await supabase.auth.signOut();
-        setError('Invalid login credentials');
+        setError('Invalid login credentials. Please wait for approval.');
       }
       setLoading(false);
     }
 
-    async function handleEmailSignup(e: React.FormEvent) {
-      e.preventDefault();
-      setError('');
-      setLoading(true);
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) setError(error.message);
-      else setError('Request submitted! You will be notified once approved.');
-      setLoading(false);
-    }
-
-    if (showSignup) {
-      // SIGNUP/REQUEST CREDENTIALS FORM
-      return (
-        <form onSubmit={handleEmailSignup} style={{ ...loginFormStyle, width: 360, padding: 0, gap: '0.7rem', alignItems: 'center' }}>
-          <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
-            Request Credentials
-          </h2>
-          {error && <div style={{ color: error.includes('submitted') ? '#22c55e' : '#e11d48', fontSize: 14, marginBottom: 6 }}>{error}</div>}
-          <button type="button" className="login-btn" style={{ ...googleBtnStyle }} onClick={() => handleOAuth('google', true)} disabled={loading}>
-            <span style={{ ...googleIconStyle }}>
-              {/* Google SVG */}
-              <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                <title>Google G Logo</title>
-                <clipPath id="g">
-                  <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/>
-                </clipPath>
-                <g clipPath="url(#g)">
-                  <path fill="#FBBC05" d="M0 37V11l17 13z"/>
-                  <path fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/>
-                  <path fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/>
-                  <path fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
-                </g>
-              </svg>
-            </span>
-            <span style={{ ...googleTextStyle }}>Request credentials with Google</span>
-          </button>
-          <button type="button" className="login-btn" style={{ ...githubBtnStyle }} onClick={() => handleOAuth('github', true)} disabled={loading}>
-            <span style={{ ...githubIconStyle }}>
-              {/* GitHub SVG */}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill="#fff" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.17-1.1-1.48-1.1-1.48-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85.004 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"/></svg>
-            </span>
-            <span style={{ ...githubTextStyle }}>Request credentials with GitHub</span>
-          </button>
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center', margin: '7px 0 2px 0' }}>
-            <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
-            <span style={{ margin: '0 12px', color: darkMode ? '#aab0bb' : '#888', fontSize: 14, fontWeight: 400, opacity: 0.9 }}>or</span>
-            <div style={{ flex: 1, height: 1, background: darkMode ? '#444' : '#e5e7eb', opacity: 0.7 }} />
-          </div>
-          <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
-            <span style={{ ...userIconStyle }}>{/* User icon */}</span>
-            <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} />
-          </div>
-          <div style={{ width: '100%', position: 'relative', marginBottom: 2 }}>
-            <span style={{ ...lockIconStyle }}>{/* Lock icon */}</span>
-            <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} />
-          </div>
-          <button className="login-btn" style={loginBtnStyle} disabled={loading}>Request Credentials</button>
-          <div style={{ marginTop: 10, fontSize: 14, color: darkMode ? '#ededed' : '#222', cursor: 'pointer' }} onClick={() => setShowSignup(false)}>
-            Back to Log In
-          </div>
-        </form>
-      );
-    }
-
-    // LOGIN FORM (default)
+    // LOGIN FORM (no sign up/request credentials)
     return (
       <form onSubmit={handleEmailLogin} style={{ ...loginFormStyle, width: 360, padding: 0, gap: '0.7rem', alignItems: 'center' }}>
         <h2 style={{ fontWeight: 500, fontSize: '1.08rem', marginBottom: 14, fontFamily: 'Switzer, sans-serif', marginTop: 0, textAlign: 'center', color: darkMode ? '#fff' : '#222', opacity: 0.95 }}>
-          Log in to your account
+          Login to your account
         </h2>
         {error && <div style={{ color: '#e11d48', fontSize: 14, marginBottom: 6 }}>{error}</div>}
         <button type="button" className="login-btn" style={{ ...googleBtnStyle }} onClick={() => handleOAuth('google')} disabled={loading}>
@@ -323,9 +260,6 @@ export default function Home() {
           <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} />
         </div>
         <button className="login-btn" style={loginBtnStyle} disabled={loading}>Log In</button>
-        <div style={{ marginTop: 10, fontSize: 14, color: darkMode ? '#ededed' : '#222', cursor: 'pointer' }} onClick={() => setShowSignup(true)}>
-          Don't have an account? <span style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111' }}>Request Credentials <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span></span>
-        </div>
       </form>
     );
   }
@@ -355,12 +289,6 @@ export default function Home() {
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
           <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
-        <div className="header-signup" style={{ fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-          <span className="hide-on-mobile" style={{ color: darkMode ? '#ededed' : '#222', fontWeight: 400 }}>Don't have an account?</span>
-          <a href="#" style={{ fontWeight: 600, color: darkMode ? '#ededed' : '#111', textDecoration: 'none', fontFamily: 'Switzer, sans-serif', fontSize: 15, display: 'inline-flex', alignItems: 'center', marginLeft: 8 }}>
-            Sign up <span style={{ fontWeight: 400, fontSize: 18, marginLeft: 2 }}>→</span>
-          </a>
-        </div>
       </div>
       {/* Main content */}
       <main style={{
