@@ -293,7 +293,7 @@ export default function Dashboard() {
       <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#fafbfc', display: 'flex', flexDirection: 'column' }}>
         {/* Main content: Projects card/table */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fafbfc' }}>
-          <div style={{ background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px 0 rgba(16,20,30,0.06)', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
+          <div style={{ background: '#fff', borderRadius: 8, boxShadow: 'none', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
             <div style={{ fontSize: 24, fontWeight: 600, marginBottom: 24, letterSpacing: 0.01 }}>Projects</div>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
               <thead>
