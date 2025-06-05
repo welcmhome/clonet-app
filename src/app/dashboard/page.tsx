@@ -121,7 +121,7 @@ export default function Dashboard() {
               fontSize: 11,
               background: '#e3eef1',
               color: '#217399',
-              borderRadius: 8,
+              borderRadius: 3,
               padding: '0 7px',
               marginLeft: 8,
               fontWeight: 700,
