@@ -90,9 +90,9 @@ export default function Dashboard() {
         zIndex: 10,
       }}>
         {/* Sidebar nav: always top-aligned */}
-        <div style={{ padding: '18px 0 0 0', flex: 1 }}>
+        <div style={{ padding: '18px 0 0 0', flex: 1, boxShadow: 'none' }}>
           <button
-            className={`sidebar-project-btn${sidebarOpen ? ' open' : ''}`}
+            className={`sidebar-project-btn no-shadow${sidebarOpen ? ' open' : ''}`}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -197,6 +197,9 @@ export default function Dashboard() {
         }
         .sidebar-project-btn:active {
           background: #f3f4f6;
+        }
+        .no-shadow {
+          box-shadow: none !important;
         }
       `}</style>
     </div>
