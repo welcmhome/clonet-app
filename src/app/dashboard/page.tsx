@@ -110,8 +110,8 @@ export default function Dashboard() {
               width: sidebarOpen ? 200 : 40,
               borderRadius: sidebarOpen ? 14 : 20,
               backgroundColor: sidebarOpen ? '#fafbfc' : '#fff',
-              boxShadow: sidebarOpen ? '0 4px 16px 0 rgba(16,20,30,0.08)' : 'none',
-              border: '1.5px solid #e5e7eb',
+              boxShadow: 'none',
+              border: '1px solid #e5e7eb',
               transition: 'width 0.25s cubic-bezier(.4,0,.2,1), border-radius 0.25s cubic-bezier(.4,0,.2,1), background 0.25s, box-shadow 0.18s',
               overflow: 'hidden',
               position: 'relative',
@@ -131,6 +131,7 @@ export default function Dashboard() {
               position: 'relative',
               left: 0,
               flexShrink: 0,
+              border: '1px solid #e5e7eb',
               transition: 'background 0.2s',
             }}>
               {/* Folder icon */}
