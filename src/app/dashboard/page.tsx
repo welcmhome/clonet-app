@@ -256,7 +256,7 @@ export default function Dashboard() {
               Select a project
             </span>
             {/* Dropdown arrow at far right */}
-            {sidebarOpen && (
+            {sidebarOpen ? (
               <span style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -266,14 +266,14 @@ export default function Dashboard() {
                 top: 0,
                 height: '100%',
                 opacity: 1,
-                transition: 'opacity 0.18s',
                 pointerEvents: 'none',
+                transition: 'opacity 0.18s',
               }}>
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-            )}
+            ) : null}
           </button>
         </div>
       </div>
