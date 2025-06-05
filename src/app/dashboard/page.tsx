@@ -290,7 +290,7 @@ export default function Dashboard() {
         </div>
       </div>
       {/* Main area: add left margin for sidebar, top margin for header */}
-      <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#fafbfc', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#f3f4f6', display: 'flex', flexDirection: 'column' }}>
         {/* Main content: Projects card/table */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fafbfc' }}>
           <div style={{ background: '#fff', borderRadius: 8, boxShadow: 'none', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
