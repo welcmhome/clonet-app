@@ -91,38 +91,72 @@ export default function Dashboard() {
       }}>
         {/* Sidebar nav: always top-aligned */}
         <div style={{ padding: '18px 0 0 0', flex: 1 }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: sidebarOpen ? 'flex-start' : 'center',
-            padding: sidebarOpen ? '0 20px' : '0',
-            height: 40,
-            fontWeight: 600,
-            fontSize: 16,
-            color: '#222',
-            cursor: 'pointer',
-            borderRadius: 8,
-            background: 'none',
-            marginBottom: 2,
-            transition: 'background 0.15s',
-          }}>
+          <button
+            className={`sidebar-project-btn${sidebarOpen ? ' open' : ''}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: sidebarOpen ? 'flex-start' : 'center',
+              padding: sidebarOpen ? '0 16px 0 12px' : '0',
+              height: 44,
+              fontWeight: 600,
+              fontSize: 16,
+              color: '#222',
+              cursor: 'pointer',
+              border: 'none',
+              outline: 'none',
+              background: 'none',
+              marginBottom: 2,
+              width: sidebarOpen ? 180 : 44,
+              borderRadius: sidebarOpen ? 12 : 22,
+              backgroundColor: sidebarOpen ? '#fafbfc' : '#fff',
+              boxShadow: sidebarOpen ? '0 1px 4px 0 rgba(16,20,30,0.04)' : 'none',
+              border: '1.5px solid #e5e7eb',
+              transition: 'width 0.25s cubic-bezier(.4,0,.2,1), border-radius 0.25s cubic-bezier(.4,0,.2,1), background 0.25s, box-shadow 0.18s',
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          >
             <span style={{
-              marginRight: sidebarOpen ? 10 : 0,
-              width: 40,
-              height: 40,
+              width: 24,
+              height: 24,
+              minWidth: 24,
+              minHeight: 24,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '50%',
-              border: '1.5px solid #e5e7eb',
-              background: '#fff',
-              boxSizing: 'border-box',
+              background: 'none',
+              transition: 'background 0.2s',
             }}>
               {/* Folder icon */}
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
             </span>
-            {sidebarOpen && <span style={{ marginLeft: 8 }}>Projects</span>}
-          </div>
+            <span
+              className="sidebar-project-label"
+              style={{
+                marginLeft: 12,
+                opacity: sidebarOpen ? 1 : 0,
+                maxWidth: sidebarOpen ? 120 : 0,
+                transition: 'opacity 0.18s, max-width 0.25s cubic-bezier(.4,0,.2,1)',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                color: '#222',
+                fontWeight: 500,
+                fontSize: 16,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              Select a project
+              <svg
+                style={{ marginLeft: 8, minWidth: 16, opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.18s' }}
+                width="16" height="16" viewBox="0 0 20 20" fill="none"
+              >
+                <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
         </div>
       </div>
       {/* Main area: add left margin for sidebar, top margin for header */}
@@ -152,6 +186,14 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        .sidebar-project-btn {
+          box-sizing: border-box;
+        }
+        .sidebar-project-btn:active {
+          background: #f3f4f6;
+        }
+      `}</style>
     </div>
   );
 } 
