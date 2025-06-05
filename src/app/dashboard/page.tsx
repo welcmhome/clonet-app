@@ -16,6 +16,18 @@ export default function Dashboard() {
   const [profile, setProfile] = useState({ name: '', email: '' });
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
+  // Show arrow only after sidebar is fully open
+  const [showArrow, setShowArrow] = useState(false);
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (sidebarOpen) {
+      timeout = setTimeout(() => setShowArrow(true), 250); // match transition duration
+    } else {
+      setShowArrow(false);
+    }
+    return () => clearTimeout(timeout);
+  }, [sidebarOpen]);
+
   useEffect(() => {
     async function fetchUser() {
       const { data: { user } } = await supabase.auth.getUser();
@@ -256,7 +268,7 @@ export default function Dashboard() {
               Select a project
             </span>
             {/* Dropdown arrow at far right */}
-            {sidebarOpen ? (
+            {showArrow ? (
               <span style={{
                 display: 'flex',
                 alignItems: 'center',
