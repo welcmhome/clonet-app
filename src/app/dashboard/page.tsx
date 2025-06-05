@@ -109,7 +109,7 @@ export default function Dashboard() {
               marginBottom: 2,
               width: sidebarOpen ? 200 : 40,
               borderRadius: sidebarOpen ? 14 : 20,
-              backgroundColor: sidebarOpen ? '#fafbfc' : '#fff',
+              backgroundColor: '#fff',
               boxShadow: 'none',
               border: '1px solid #e5e7eb',
               transition: 'width 0.25s cubic-bezier(.4,0,.2,1), border-radius 0.25s cubic-bezier(.4,0,.2,1), background 0.25s, box-shadow 0.18s',
@@ -132,9 +132,9 @@ export default function Dashboard() {
               left: 0,
               flexShrink: 0,
               transition: 'background 0.2s',
+              padding: 0,
             }}>
-              {/* Folder icon */}
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ display: 'block', margin: 0, padding: 0 }}><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
             </span>
             <span
               className="sidebar-project-label"
