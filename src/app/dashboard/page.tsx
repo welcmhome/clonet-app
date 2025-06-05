@@ -4,6 +4,9 @@ import { useState } from 'react';
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
+  // Dynamic left padding for header content to align with sidebar
+  const headerLeft = sidebarOpen ? 240 : 72;
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
       {/* Header: always full width, fixed at top */}
@@ -21,7 +24,7 @@ export default function Dashboard() {
         padding: '0 40px',
         boxSizing: 'border-box',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+        <div style={{ display: 'flex', alignItems: 'center', height: 64, position: 'absolute', left: headerLeft, top: 0, bottom: 0 }}>
           <button
             onClick={() => setSidebarOpen((open) => !open)}
             style={{
@@ -82,19 +85,13 @@ export default function Dashboard() {
         boxSizing: 'border-box',
         zIndex: 10,
       }}>
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: sidebarOpen ? 'flex-start' : 'center',
-          alignItems: 'stretch',
-          height: '100%',
-        }}>
+        {/* Sidebar nav: always top-aligned */}
+        <div style={{ padding: sidebarOpen ? '18px 0 0 0' : '18px 0 0 0', flex: 1 }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: sidebarOpen ? 'flex-start' : 'center',
-            padding: sidebarOpen ? '18px 20px 0 20px' : '0',
+            padding: sidebarOpen ? '0 20px' : '0',
             height: 40,
             fontWeight: 600,
             fontSize: 16,
