@@ -117,14 +117,14 @@ export default function Dashboard() {
               clonet
             </span>
             <span style={{
-              fontFamily: 'monospace, "Fira Mono", "Menlo", "Consolas", "Liberation Mono", "Courier New", "monospace"',
-              fontSize: 16,
+              fontFamily: 'Pixelify Sans, monospace',
+              fontSize: 14,
               background: '#e3eef1',
               color: '#217399',
-              borderRadius: 8,
+              borderRadius: 5,
               padding: '2px 10px 2px 10px',
               marginLeft: 10,
-              fontWeight: 600,
+              fontWeight: 700,
               letterSpacing: '0.04em',
               lineHeight: 1.1,
               display: 'inline-block',
@@ -132,7 +132,7 @@ export default function Dashboard() {
               border: 'none',
               textTransform: 'lowercase',
             }}>
-              lab
+              labs
             </span>
           </span>
         </div>
