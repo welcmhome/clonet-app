@@ -1,17 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '@/utils/supabaseClient';
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    window.location.href = '/';
-  }
-
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', fontFamily: 'Switzer, sans-serif', background: 'linear-gradient(180deg, #f8fafc 0%, #eaf1ff 40%, #f8fafc 100%)', color: '#222' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', fontFamily: 'Switzer, sans-serif', background: '#fff', color: '#222' }}>
       {/* Sidebar */}
       <div style={{
         width: sidebarOpen ? 240 : 72,
@@ -25,7 +19,7 @@ export default function Dashboard() {
         boxSizing: 'border-box',
         zIndex: 10,
       }}>
-        {/* Sidebar header: Hamburger + clonet logo */}
+        {/* Sidebar header: Hamburger + clonet logo always visible */}
         <div style={{ display: 'flex', alignItems: 'center', height: 64, padding: sidebarOpen ? '0 20px' : '0 12px', borderBottom: '1px solid #f1f1f1', minWidth: 0 }}>
           <button
             onClick={() => setSidebarOpen((open) => !open)}
@@ -51,11 +45,9 @@ export default function Dashboard() {
               </svg>
             </span>
           </button>
-          {sidebarOpen && (
-            <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2 }}>
-              clonet
-            </span>
-          )}
+          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: sidebarOpen ? 2 : 0, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
+            clonet
+          </span>
         </div>
         {/* Sidebar nav */}
         <div style={{ padding: sidebarOpen ? '18px 0 0 0' : '18px 0 0 0', flex: 1 }}>
@@ -80,28 +72,35 @@ export default function Dashboard() {
             {sidebarOpen && 'Projects'}
           </div>
         </div>
-        {/* Optional: Sign Out button at bottom of sidebar */}
-        <div style={{ padding: sidebarOpen ? '0 20px 24px 20px' : '0 12px 24px 12px', marginTop: 'auto' }}>
-          <button onClick={handleSignOut} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', borderRadius: 20, padding: '10px 0', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'Switzer, sans-serif', boxShadow: '0 2px 8px 0 rgba(16,20,30,0.08)', transition: 'background 0.2s' }}>
-            Sign Out
-          </button>
-        </div>
       </div>
       {/* Main area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#fff' }}>
         {/* Header */}
-        <div style={{ width: '100%', display: 'flex', alignItems: 'center', height: 64, padding: '0 40px', boxSizing: 'border-box', borderBottom: '1px solid #e5e7eb', background: 'none', position: 'relative' }}>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center', height: 64, padding: '0 40px', boxSizing: 'border-box', borderBottom: '1px solid #e5e7eb', background: '#fff', position: 'relative' }}>
           {/* Empty header for now, matches screenshot */}
         </div>
-        {/* Main content */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 24 }}>
-          <div>
-            <h1 style={{ fontSize: 24, fontWeight: 600, marginBottom: 16 }}>
-              You're logged in.
-            </h1>
-            <p style={{ fontSize: 18, fontWeight: 400 }}>
-              This is a temporary dashboard while we build the full experience.<br />More coming soon!
-            </p>
+        {/* Main content: Projects card/table */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fff' }}>
+          <div style={{ background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px 0 rgba(16,20,30,0.06)', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
+            <div style={{ fontSize: 24, fontWeight: 600, marginBottom: 24, letterSpacing: 0.01 }}>Projects</div>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
+              <thead>
+                <tr style={{ color: '#888', fontWeight: 500, fontSize: 15, borderBottom: '1px solid #e5e7eb' }}>
+                  <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>PROJECT</th>
+                  <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>TYPE</th>
+                  <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>WORK FORCE</th>
+                  <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ borderBottom: '1px solid #f1f1f1' }}>
+                  <td style={{ padding: '12px 0', fontWeight: 500, color: '#222' }}>[Sample] Image Annotation Project</td>
+                  <td style={{ padding: '12px 0', color: '#222' }}>General Image Annotation</td>
+                  <td style={{ padding: '12px 0', color: '#222' }}>studio</td>
+                  <td style={{ padding: '12px 0', color: '#3b82f6', fontWeight: 500, cursor: 'pointer' }}>View</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
