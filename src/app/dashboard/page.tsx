@@ -112,8 +112,28 @@ export default function Dashboard() {
               </svg>
             </span>
           </button>
-          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
-            clonet
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
+              clonet
+            </span>
+            <span style={{
+              fontFamily: 'monospace, "Fira Mono", "Menlo", "Consolas", "Liberation Mono", "Courier New", "monospace"',
+              fontSize: 16,
+              background: '#e3eef1',
+              color: '#217399',
+              borderRadius: 8,
+              padding: '2px 10px 2px 10px',
+              marginLeft: 10,
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              lineHeight: 1.1,
+              display: 'inline-block',
+              boxShadow: 'none',
+              border: 'none',
+              textTransform: 'lowercase',
+            }}>
+              lab
+            </span>
           </span>
         </div>
         <div style={{ flex: 1 }} />
