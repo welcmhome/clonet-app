@@ -131,7 +131,6 @@ export default function Dashboard() {
               position: 'relative',
               left: 0,
               flexShrink: 0,
-              border: '1px solid #e5e7eb',
               transition: 'background 0.2s',
             }}>
               {/* Folder icon */}
