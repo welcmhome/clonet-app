@@ -1,5 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+// @ts-ignore
+import { supabase } from '@/utils/supabaseClient';
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -8,6 +10,50 @@ export default function Dashboard() {
   const SIDEBAR_OPEN_WIDTH = 240;
   const SIDEBAR_CLOSED_WIDTH = 72;
   const sidebarWidth = sidebarOpen ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH;
+
+  // Profile dropdown state
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [profile, setProfile] = useState({ name: '', email: '' });
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        // Try to get name/email from 'profiles' table, fallback to user object
+        const { data } = await supabase
+          .from('profiles')
+          .select('full_name, email')
+          .eq('id', user.id)
+          .single();
+        setProfile({
+          name: data?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+          email: data?.email || user.email || '',
+        });
+      }
+    }
+    fetchUser();
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dropdownRef.current && e.target instanceof Node && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClick);
+    } else {
+      document.removeEventListener('mousedown', handleClick);
+    }
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [dropdownOpen]);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  }
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
@@ -68,9 +114,63 @@ export default function Dashboard() {
           <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: 8, height: 36, width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 7h18M6 12h12M9 17h6" stroke="#888" strokeWidth="2" strokeLinecap="round"/></svg>
           </button>
-          <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: '50%', height: 36, width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="#888" strokeWidth="2"/><path d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" stroke="#888" strokeWidth="2"/></svg>
-          </button>
+          {/* Profile button and dropdown */}
+          <div style={{ position: 'relative' }} ref={dropdownRef}>
+            <button
+              style={{
+                background: 'none',
+                border: 'none',
+                borderRadius: '50%',
+                height: 36,
+                width: 36,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                padding: 0,
+                outline: 'none',
+              }}
+              aria-label="Open profile menu"
+              onClick={() => setDropdownOpen((open) => !open)}
+            >
+              {/* Black profile icon */}
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4" stroke="#111" strokeWidth="2"/>
+                <path d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" stroke="#111" strokeWidth="2"/>
+              </svg>
+            </button>
+            {dropdownOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 44,
+                  right: 0,
+                  minWidth: 220,
+                  background: '#fff',
+                  borderRadius: 12,
+                  boxShadow: '0 6px 32px 0 rgba(16,20,30,0.13)',
+                  padding: '10px 0 6px 0',
+                  zIndex: 1000,
+                  fontFamily: 'Switzer, sans-serif',
+                }}
+              >
+                <div style={{ padding: '8px 20px 6px 20px', borderBottom: '1px solid #f1f1f1', marginBottom: 2 }}>
+                  <div style={{ fontWeight: 600, fontSize: 15, color: '#222', marginBottom: 2 }}>{profile.name}</div>
+                  <div style={{ fontSize: 13, color: '#888', fontWeight: 400, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{profile.email}</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>Profile</button>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>Team</button>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>Labeling Team</button>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>Billing</button>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>API Key</button>
+                  <button style={dropdownItemStyle} onClick={() => setDropdownOpen(false)}>Integrations</button>
+                </div>
+                <div style={{ borderTop: '1px solid #f1f1f1', margin: '8px 0 0 0' }} />
+                <button style={{ ...dropdownItemStyle, color: '#e11d48', fontWeight: 500 }} onClick={handleLogout}>Logout</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {/* Sidebar: below header, overlays main content, does not shift header */}
@@ -203,4 +303,23 @@ export default function Dashboard() {
       `}</style>
     </div>
   );
-} 
+}
+
+// Dropdown item style
+const dropdownItemStyle = {
+  background: 'none',
+  border: 'none',
+  textAlign: 'left' as const,
+  width: '100%',
+  padding: '10px 20px',
+  fontSize: 15,
+  color: '#222',
+  fontFamily: 'Switzer, sans-serif',
+  cursor: 'pointer',
+  outline: 'none',
+  transition: 'background 0.13s',
+  borderRadius: 0,
+  fontWeight: 400,
+  margin: 0,
+  display: 'block',
+}; 
