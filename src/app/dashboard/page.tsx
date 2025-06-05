@@ -128,11 +128,13 @@ export default function Dashboard() {
               fontWeight: 700,
               letterSpacing: '0.04em',
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'flex-end',
               justifyContent: 'center',
               boxShadow: 'none',
               border: 'none',
               textTransform: 'lowercase',
+              lineHeight: 1,
+              verticalAlign: 'baseline',
             }}>
               labs
             </span>
