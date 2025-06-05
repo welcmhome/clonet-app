@@ -125,6 +125,7 @@ export default function Dashboard() {
               height: 18,
               padding: '0 8px',
               marginLeft: 8,
+              marginBottom: 2,
               fontWeight: 700,
               letterSpacing: '0.04em',
               display: 'flex',
@@ -134,7 +135,6 @@ export default function Dashboard() {
               border: 'none',
               textTransform: 'lowercase',
               lineHeight: 1,
-              verticalAlign: 'baseline',
             }}>
               labs
             </span>
