@@ -4,8 +4,10 @@ import { useState } from 'react';
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Dynamic left padding for header content to align with sidebar
-  const headerLeft = sidebarOpen ? 240 : 72;
+  // Sidebar width constants
+  const SIDEBAR_OPEN_WIDTH = 240;
+  const SIDEBAR_CLOSED_WIDTH = 72;
+  const sidebarWidth = sidebarOpen ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH;
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
@@ -24,7 +26,8 @@ export default function Dashboard() {
         padding: '0 40px',
         boxSizing: 'border-box',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', height: 64, position: 'absolute', left: headerLeft, top: 0, bottom: 0 }}>
+        {/* Hamburger + Logo always flush left */}
+        <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
           <button
             onClick={() => setSidebarOpen((open) => !open)}
             style={{
@@ -69,13 +72,13 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
-      {/* Sidebar: below header, only navigation, visually distinct */}
+      {/* Sidebar: below header, overlays main content, does not shift header */}
       <div style={{
         position: 'fixed',
         top: 64,
         left: 0,
         height: 'calc(100vh - 64px)',
-        width: sidebarOpen ? 240 : 72,
+        width: sidebarWidth,
         background: '#fff',
         borderRight: '1px solid #e5e7eb',
         transition: 'width 0.2s',
@@ -86,7 +89,7 @@ export default function Dashboard() {
         zIndex: 10,
       }}>
         {/* Sidebar nav: always top-aligned */}
-        <div style={{ padding: sidebarOpen ? '18px 0 0 0' : '18px 0 0 0', flex: 1 }}>
+        <div style={{ padding: '18px 0 0 0', flex: 1 }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -102,16 +105,27 @@ export default function Dashboard() {
             marginBottom: 2,
             transition: 'background 0.15s',
           }}>
-            <span style={{ marginRight: sidebarOpen ? 10 : 0, width: 20, textAlign: 'center', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+            <span style={{
+              marginRight: sidebarOpen ? 10 : 0,
+              width: 40,
+              height: 40,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              border: '1.5px solid #e5e7eb',
+              background: '#fff',
+              boxSizing: 'border-box',
+            }}>
               {/* Folder icon */}
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#222" strokeWidth="1.3"/></svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
             </span>
-            {sidebarOpen && 'Projects'}
+            {sidebarOpen && <span style={{ marginLeft: 8 }}>Projects</span>}
           </div>
         </div>
       </div>
       {/* Main area: add left margin for sidebar, top margin for header */}
-      <div style={{ marginLeft: sidebarOpen ? 240 : 72, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#fafbfc', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#fafbfc', display: 'flex', flexDirection: 'column' }}>
         {/* Main content: Projects card/table */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fafbfc' }}>
           <div style={{ background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px 0 rgba(16,20,30,0.06)', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
