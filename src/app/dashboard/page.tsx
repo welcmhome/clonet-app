@@ -132,7 +132,6 @@ export default function Dashboard() {
               left: 0,
               flexShrink: 0,
               transition: 'background 0.2s',
-              marginLeft: 16,
             }}>
               {/* Folder icon */}
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
@@ -151,16 +150,15 @@ export default function Dashboard() {
                 fontSize: 14,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                width: '100%',
               }}
             >
-              <span style={{ flex: 1, textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis' }}>Select a project</span>
-              <span style={{ display: 'flex', alignItems: 'center', marginLeft: 8, opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.18s' }}>
-                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                  <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
+              Select a project
+              <svg
+                style={{ marginLeft: 8, minWidth: 16, opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.18s' }}
+                width="16" height="16" viewBox="0 0 20 20" fill="none"
+              >
+                <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </span>
           </button>
         </div>
