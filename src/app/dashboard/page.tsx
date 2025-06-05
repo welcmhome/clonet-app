@@ -250,16 +250,30 @@ export default function Dashboard() {
                 fontSize: 14,
                 display: 'flex',
                 alignItems: 'center',
+                flex: 1,
               }}
             >
               Select a project
-              <svg
-                style={{ marginLeft: 8, minWidth: 16, opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.18s' }}
-                width="16" height="16" viewBox="0 0 20 20" fill="none"
-              >
-                <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
             </span>
+            {/* Dropdown arrow at far right */}
+            {sidebarOpen && (
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                right: 16,
+                top: 0,
+                height: '100%',
+                opacity: 1,
+                transition: 'opacity 0.18s',
+                pointerEvents: 'none',
+              }}>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="#6C47FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            )}
           </button>
         </div>
       </div>
