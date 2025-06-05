@@ -23,11 +23,12 @@ export default function Dashboard() {
         top: 0,
         left: 0,
         zIndex: 100,
-        padding: '0 40px',
+        paddingLeft: 0,
+        paddingRight: 40,
         boxSizing: 'border-box',
       }}>
-        {/* Hamburger + Logo always flush left */}
-        <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+        {/* Hamburger + Logo perfectly flush left, matching sidebar */}
+        <div style={{ display: 'flex', alignItems: 'center', height: 64, marginLeft: 16 }}>
           <button
             onClick={() => setSidebarOpen((open) => !open)}
             style={{
