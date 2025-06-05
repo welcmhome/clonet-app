@@ -121,9 +121,9 @@ export default function Dashboard() {
               fontSize: 11,
               background: '#e3eef1',
               color: '#217399',
-              borderRadius: 3,
-              height: 26,
-              padding: '0 12px',
+              borderRadius: 5,
+              height: 20,
+              padding: '0 8px',
               marginLeft: 8,
               fontWeight: 700,
               letterSpacing: '0.04em',
@@ -133,7 +133,6 @@ export default function Dashboard() {
               boxShadow: 'none',
               border: 'none',
               textTransform: 'lowercase',
-              verticalAlign: 'bottom',
             }}>
               labs
             </span>
