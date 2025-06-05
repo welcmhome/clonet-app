@@ -117,8 +117,8 @@ export default function Dashboard() {
               clonet
             </span>
             <span style={{
-              fontFamily: 'Pixelify Sans, monospace',
-              fontSize: 14,
+              fontFamily: '"Pixelify Sans", monospace',
+              fontSize: 15,
               background: '#e3eef1',
               color: '#217399',
               borderRadius: 5,
