@@ -82,12 +82,19 @@ export default function Dashboard() {
         boxSizing: 'border-box',
         zIndex: 10,
       }}>
-        <div style={{ padding: sidebarOpen ? '18px 0 0 0' : '18px 0 0 0', flex: 1 }}>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: sidebarOpen ? 'flex-start' : 'center',
+          alignItems: 'stretch',
+          height: '100%',
+        }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: sidebarOpen ? 'flex-start' : 'center',
-            padding: sidebarOpen ? '0 20px' : '0',
+            padding: sidebarOpen ? '18px 20px 0 20px' : '0',
             height: 40,
             fontWeight: 600,
             fontSize: 16,
