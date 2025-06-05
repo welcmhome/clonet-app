@@ -5,59 +5,80 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
-      {/* Sidebar */}
+    <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
+      {/* Header: always full width, fixed at top */}
       <div style={{
+        width: '100%',
+        height: 64,
+        display: 'flex',
+        alignItems: 'center',
+        background: '#fff',
+        borderBottom: '1px solid #e5e7eb',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 100,
+        padding: '0 40px',
+        boxSizing: 'border-box',
+      }}>
+        <button
+          onClick={() => setSidebarOpen((open) => !open)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            marginRight: 18,
+            width: 40,
+            height: 40,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+          aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+        >
+          <span style={{ display: 'inline-block', width: 24, height: 24 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect y="4" width="24" height="2" rx="1" fill="#222" />
+              <rect y="11" width="24" height="2" rx="1" fill="#222" />
+              <rect y="18" width="24" height="2" rx="1" fill="#222" />
+            </svg>
+          </span>
+        </button>
+        <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
+          clonet
+        </span>
+        <div style={{ flex: 1 }} />
+        {/* Search bar, sort, avatar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ background: '#f5f6fa', borderRadius: 8, padding: '0 12px', height: 36, display: 'flex', alignItems: 'center', border: '1px solid #e5e7eb' }}>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#888" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="#888" strokeWidth="2" strokeLinecap="round"/></svg>
+            <input placeholder="Search" style={{ border: 'none', outline: 'none', background: 'none', fontSize: 15, marginLeft: 6, width: 120, color: '#222', fontFamily: 'Switzer, sans-serif' }} />
+          </div>
+          <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: 8, height: 36, width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 7h18M6 12h12M9 17h6" stroke="#888" strokeWidth="2" strokeLinecap="round"/></svg>
+          </button>
+          <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: '50%', height: 36, width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="#888" strokeWidth="2"/><path d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" stroke="#888" strokeWidth="2"/></svg>
+          </button>
+        </div>
+      </div>
+      {/* Sidebar: below header, only navigation, visually distinct */}
+      <div style={{
+        position: 'fixed',
+        top: 64,
+        left: 0,
+        height: 'calc(100vh - 64px)',
         width: sidebarOpen ? 240 : 72,
         background: '#fff',
         borderRight: '1px solid #e5e7eb',
         transition: 'width 0.2s',
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
         boxSizing: 'border-box',
         zIndex: 10,
       }}>
-        {/* Sidebar header: Hamburger + clonet logo always visible, centered */}
-        <div style={{ display: 'flex', alignItems: 'center', height: 64, padding: 0, borderBottom: '1px solid #f1f1f1', minWidth: 0, justifyContent: sidebarOpen ? 'flex-start' : 'center' }}>
-          <button
-            onClick={() => setSidebarOpen((open) => !open)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              marginLeft: sidebarOpen ? 20 : 0,
-              marginRight: sidebarOpen ? 16 : 0,
-              width: 40,
-              height: 40,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-            aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-          >
-            <span style={{ display: 'inline-block', width: 24, height: 24 }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect y="4" width="24" height="2" rx="1" fill="#222" />
-                <rect y="11" width="24" height="2" rx="1" fill="#222" />
-                <rect y="18" width="24" height="2" rx="1" fill="#222" />
-              </svg>
-            </span>
-          </button>
-          {sidebarOpen ? (
-            <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
-              clonet
-            </span>
-          ) : (
-            <span style={{ marginLeft: 0, width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Minimal logo/icon placeholder */}
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#222" strokeWidth="2" /></svg>
-            </span>
-          )}
-        </div>
-        {/* Sidebar nav */}
         <div style={{ padding: sidebarOpen ? '18px 0 0 0' : '18px 0 0 0', flex: 1 }}>
           <div style={{
             display: 'flex',
@@ -82,27 +103,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      {/* Main area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#fafbfc' }}>
-        {/* Header */}
-        <div style={{ width: '100%', display: 'flex', alignItems: 'center', height: 64, padding: '0 40px', boxSizing: 'border-box', borderBottom: '1px solid #e5e7eb', background: '#fff', position: 'relative' }}>
-          <div style={{ flex: 1 }} />
-          {/* Search bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ background: '#f5f6fa', borderRadius: 8, padding: '0 12px', height: 36, display: 'flex', alignItems: 'center', border: '1px solid #e5e7eb' }}>
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#888" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="#888" strokeWidth="2" strokeLinecap="round"/></svg>
-              <input placeholder="Search" style={{ border: 'none', outline: 'none', background: 'none', fontSize: 15, marginLeft: 6, width: 120, color: '#222', fontFamily: 'Switzer, sans-serif' }} />
-            </div>
-            {/* Sort button */}
-            <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: 8, height: 36, width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 7h18M6 12h12M9 17h6" stroke="#888" strokeWidth="2" strokeLinecap="round"/></svg>
-            </button>
-            {/* Avatar/profile button */}
-            <button style={{ background: '#f5f6fa', border: '1px solid #e5e7eb', borderRadius: '50%', height: 36, width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="#888" strokeWidth="2"/><path d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4" stroke="#888" strokeWidth="2"/></svg>
-            </button>
-          </div>
-        </div>
+      {/* Main area: add left margin for sidebar, top margin for header */}
+      <div style={{ marginLeft: sidebarOpen ? 240 : 72, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#fafbfc', display: 'flex', flexDirection: 'column' }}>
         {/* Main content: Projects card/table */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fafbfc' }}>
           <div style={{ background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px 0 rgba(16,20,30,0.06)', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
