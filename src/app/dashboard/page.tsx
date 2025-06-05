@@ -96,8 +96,7 @@ export default function Dashboard() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: sidebarOpen ? 'flex-start' : 'center',
-              padding: sidebarOpen ? '0 20px 0 16px' : '0',
+              padding: 0,
               height: 48,
               fontWeight: 500,
               fontSize: 16,
@@ -116,18 +115,22 @@ export default function Dashboard() {
               transition: 'width 0.25s cubic-bezier(.4,0,.2,1), border-radius 0.25s cubic-bezier(.4,0,.2,1), background 0.25s, box-shadow 0.18s',
               overflow: 'hidden',
               position: 'relative',
+              justifyContent: 'flex-start',
             }}
           >
             <span style={{
-              width: 24,
-              height: 24,
-              minWidth: 24,
-              minHeight: 24,
+              width: 44,
+              height: 44,
+              minWidth: 44,
+              minHeight: 44,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '50%',
               background: 'none',
+              position: 'relative',
+              left: 0,
+              flexShrink: 0,
               transition: 'background 0.2s',
             }}>
               {/* Folder icon */}
@@ -136,9 +139,9 @@ export default function Dashboard() {
             <span
               className="sidebar-project-label"
               style={{
-                marginLeft: 12,
+                marginLeft: 8,
                 opacity: sidebarOpen ? 1 : 0,
-                maxWidth: sidebarOpen ? 120 : 0,
+                maxWidth: sidebarOpen ? 140 : 0,
                 transition: 'opacity 0.18s, max-width 0.25s cubic-bezier(.4,0,.2,1)',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
