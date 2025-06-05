@@ -108,7 +108,7 @@ export default function Dashboard() {
               marginLeft: 12,
               marginBottom: 2,
               width: sidebarOpen ? 200 : 40,
-              borderRadius: sidebarOpen ? 14 : 20,
+              borderRadius: sidebarOpen ? 8 : 20,
               backgroundColor: '#fff',
               boxShadow: 'none',
               border: '1px solid #e5e7eb',
@@ -134,7 +134,7 @@ export default function Dashboard() {
               transition: 'background 0.2s',
               padding: 0,
             }}>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ display: 'block', margin: 0, padding: 0 }}><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ display: 'block', margin: '0 0 0 1px', padding: 0 }}><path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h3.382a1.5 1.5 0 0 1 1.06.44l.618.62c.094.093.22.146.352.146H16a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 16 16H4A1.5 1.5 0 0 1 2.5 14.5v-9Z" stroke="#6C47FF" strokeWidth="1.3" fill="#6C47FF" fillOpacity="0.13"/></svg>
             </span>
             <span
               className="sidebar-project-label"
