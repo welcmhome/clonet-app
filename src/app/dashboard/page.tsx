@@ -112,25 +112,26 @@ export default function Dashboard() {
               </svg>
             </span>
           </button>
-          <span style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ display: 'flex', alignItems: 'flex-end' }}>
             <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
               clonet
             </span>
             <span style={{
               fontFamily: '"Pixelify Sans", monospace',
-              fontSize: 15,
+              fontSize: 12,
               background: '#e3eef1',
               color: '#217399',
-              borderRadius: 5,
-              padding: '2px 10px 2px 10px',
-              marginLeft: 10,
+              borderRadius: 4,
+              padding: '0 8px',
+              marginLeft: 8,
               fontWeight: 700,
               letterSpacing: '0.04em',
-              lineHeight: 1.1,
+              lineHeight: 1,
               display: 'inline-block',
               boxShadow: 'none',
               border: 'none',
               textTransform: 'lowercase',
+              verticalAlign: 'baseline',
             }}>
               labs
             </span>
