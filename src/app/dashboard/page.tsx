@@ -21,33 +21,36 @@ export default function Dashboard() {
         padding: '0 40px',
         boxSizing: 'border-box',
       }}>
-        <button
-          onClick={() => setSidebarOpen((open) => !open)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            marginRight: 18,
-            width: 40,
-            height: 40,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-          }}
-          aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-        >
-          <span style={{ display: 'inline-block', width: 24, height: 24 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect y="4" width="24" height="2" rx="1" fill="#222" />
-              <rect y="11" width="24" height="2" rx="1" fill="#222" />
-              <rect y="18" width="24" height="2" rx="1" fill="#222" />
-            </svg>
+        <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+          <button
+            onClick={() => setSidebarOpen((open) => !open)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              marginRight: 14,
+              width: 32,
+              height: 32,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              padding: 0,
+            }}
+            aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+          >
+            <span style={{ display: 'inline-block', width: 18, height: 18 }}>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect y="3" width="18" height="2" rx="1" fill="#222" />
+                <rect y="8" width="18" height="2" rx="1" fill="#222" />
+                <rect y="13" width="18" height="2" rx="1" fill="#222" />
+              </svg>
+            </span>
+          </button>
+          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
+            clonet
           </span>
-        </button>
-        <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 22, letterSpacing: '0.01em', lineHeight: 1.1, color: '#222', whiteSpace: 'nowrap', marginLeft: 2, opacity: 1, transition: 'opacity 0.2s', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 }}>
-          clonet
-        </span>
+        </div>
         <div style={{ flex: 1 }} />
         {/* Search bar, sort, avatar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
