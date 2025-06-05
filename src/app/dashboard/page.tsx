@@ -28,7 +28,7 @@ export default function Dashboard() {
         boxSizing: 'border-box',
       }}>
         {/* Hamburger + Logo perfectly flush left, matching sidebar */}
-        <div style={{ display: 'flex', alignItems: 'center', height: 64, marginLeft: 22 }}>
+        <div style={{ display: 'flex', alignItems: 'center', height: 64, marginLeft: 20 }}>
           <button
             onClick={() => setSidebarOpen((open) => !open)}
             style={{
