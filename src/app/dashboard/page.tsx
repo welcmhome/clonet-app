@@ -119,8 +119,8 @@ export default function Dashboard() {
             <span style={{
               fontFamily: '"Pixelify Sans", monospace',
               fontSize: 11,
-              background: '#e3eef1',
-              color: '#217399',
+              background: 'rgba(108,71,255,0.13)',
+              color: '#6C47FF',
               borderRadius: 5,
               height: 18,
               padding: '0 8px',
