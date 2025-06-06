@@ -90,8 +90,9 @@ export default function Dashboard() {
           <button
             onClick={() => setSidebarOpen((open) => !open)}
             style={{
-              background: 'none',
+              background: sidebarOpen ? '#f5f6fa' : 'none',
               border: 'none',
+              borderRadius: '50%',
               cursor: 'pointer',
               marginRight: 14,
               width: 32,
@@ -101,6 +102,7 @@ export default function Dashboard() {
               justifyContent: 'center',
               flexShrink: 0,
               padding: 0,
+              transition: 'background 0.18s',
             }}
             aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
           >
