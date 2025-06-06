@@ -106,11 +106,11 @@ export default function Dashboard() {
             }}
             aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
           >
-            <span style={{ display: 'inline-block', width: 18, height: 18 }}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect y="3" width="18" height="2" rx="1" fill="#222" />
-                <rect y="8" width="18" height="2" rx="1" fill="#222" />
-                <rect y="13" width="18" height="2" rx="1" fill="#222" />
+            <span style={{ display: 'inline-block', width: 14, height: 18 }}>
+              <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
+                <rect y="3" width="14" height="2" rx="1" fill="#222" />
+                <rect y="8" width="14" height="2" rx="1" fill="#222" />
+                <rect y="13" width="14" height="2" rx="1" fill="#222" />
               </svg>
             </span>
           </button>
