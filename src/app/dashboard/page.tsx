@@ -126,7 +126,7 @@ export default function Dashboard() {
               padding: '0 8px',
               marginLeft: 8,
               position: 'relative',
-              top: '2px',
+              top: '-3px',
               fontWeight: 700,
               letterSpacing: '0.04em',
               display: 'flex',
