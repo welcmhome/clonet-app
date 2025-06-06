@@ -95,8 +95,8 @@ export default function Dashboard() {
               borderRadius: '50%',
               cursor: 'pointer',
               marginRight: 14,
-              width: 32,
-              height: 32,
+              width: 36,
+              height: 36,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -106,11 +106,11 @@ export default function Dashboard() {
             }}
             aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
           >
-            <span style={{ display: 'inline-block', width: 14, height: 18 }}>
-              <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
-                <rect y="3" width="14" height="2" rx="1" fill="#222" />
-                <rect y="8" width="14" height="2" rx="1" fill="#222" />
-                <rect y="13" width="14" height="2" rx="1" fill="#222" />
+            <span style={{ display: 'inline-block', width: 12, height: 16 }}>
+              <svg width="12" height="16" viewBox="0 0 12 16" fill="none">
+                <rect y="2" width="12" height="2" rx="1" fill="#222" />
+                <rect y="7" width="12" height="2" rx="1" fill="#222" />
+                <rect y="12" width="12" height="2" rx="1" fill="#222" />
               </svg>
             </span>
           </button>
