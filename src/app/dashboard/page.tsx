@@ -67,16 +67,28 @@ export default function Dashboard() {
     window.location.href = '/';
   }
 
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    const stored = localStorage.getItem('clonet-dark-mode');
+    if (stored) setDarkMode(stored === 'true');
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('clonet-dark-mode', darkMode ? 'true' : 'false');
+    document.body.style.background = darkMode ? '#181a20' : '#fafbfc';
+    document.documentElement.style.background = darkMode ? '#181a20' : '#fafbfc';
+  }, [darkMode]);
+
   return (
-    <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: '#fafbfc', color: '#222' }}>
+    <div style={{ minHeight: '100vh', fontFamily: 'Switzer, sans-serif', background: darkMode ? '#181a20' : '#fafbfc', color: darkMode ? '#ededed' : '#222' }}>
       {/* Header: always full width, fixed at top */}
       <div style={{
         width: '100%',
         height: 64,
         display: 'flex',
         alignItems: 'center',
-        background: '#fff',
-        borderBottom: '1px solid #e5e7eb',
+        background: darkMode ? '#23242a' : '#fff',
+        borderBottom: darkMode ? '1px solid #23242a' : '1px solid #e5e7eb',
         position: 'fixed',
         top: 0,
         left: 0,
@@ -210,6 +222,52 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+          {/* Dark mode toggle */}
+          <button
+            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            onClick={() => setDarkMode((d) => !d)}
+            style={{
+              marginRight: 18,
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              outline: 'none',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span
+              style={{
+                display: 'inline-block',
+                width: 36,
+                height: 20,
+                borderRadius: 12,
+                border: darkMode ? '1.5px solid #35373f' : '1.5px solid #d1d5db',
+                background: darkMode ? '#23232a' : '#fff',
+                boxShadow: '0 2px 8px #0001',
+                position: 'relative',
+                transition: 'background 0.2s, border 0.2s',
+                verticalAlign: 'middle',
+              }}
+            >
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: darkMode ? 19 : 3,
+                  width: 14,
+                  height: 14,
+                  borderRadius: '50%',
+                  background: darkMode ? '#35373f' : '#d1d5db',
+                  boxShadow: '0 1px 4px #0002',
+                  transition: 'left 0.2s, background 0.2s, top 0.2s',
+                  display: 'block',
+                  transform: 'translateY(-50%)',
+                }}
+              />
+            </span>
+          </button>
         </div>
       </div>
       {/* Sidebar: below header, overlays main content, does not shift header */}
