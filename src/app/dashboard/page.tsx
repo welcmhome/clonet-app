@@ -133,8 +133,8 @@ export default function Dashboard() {
             <span style={{
               fontFamily: '"Pixelify Sans", monospace',
               fontSize: 11,
-              background: 'rgba(108,71,255,0.13)',
-              color: '#6C47FF',
+              background: darkMode ? 'rgba(108,71,255,0.18)' : 'rgba(108,71,255,0.13)',
+              color: darkMode ? '#b7aaff' : '#6C47FF',
               borderRadius: 5,
               height: 18,
               padding: '0 8px',
@@ -222,19 +222,20 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-          {/* Dark mode toggle */}
+          {/* Dark mode toggle (fixed bottom right, like login) */}
           <button
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={() => setDarkMode((d) => !d)}
             style={{
-              marginRight: 18,
+              position: 'fixed',
+              right: 24,
+              bottom: 24,
               background: 'none',
               border: 'none',
               padding: 0,
+              zIndex: 100,
               cursor: 'pointer',
               outline: 'none',
-              display: 'flex',
-              alignItems: 'center',
             }}
           >
             <span
@@ -277,8 +278,8 @@ export default function Dashboard() {
         left: 0,
         height: 'calc(100vh - 64px)',
         width: sidebarWidth,
-        background: '#fff',
-        borderRight: '1px solid #e5e7eb',
+        background: darkMode ? '#181a20' : '#fff',
+        borderRight: darkMode ? '1px solid #23242a' : '1px solid #e5e7eb',
         transition: 'width 0.2s',
         display: 'flex',
         flexDirection: 'column',
@@ -375,14 +376,14 @@ export default function Dashboard() {
         </div>
       </div>
       {/* Main area: add left margin for sidebar, top margin for header */}
-      <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: '#f3f4f6', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginLeft: sidebarWidth, marginTop: 64, minHeight: 'calc(100vh - 64px)', background: darkMode ? '#181a20' : '#f3f4f6', display: 'flex', flexDirection: 'column' }}>
         {/* Main content: Projects card/table */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: '#fafbfc' }}>
-          <div style={{ background: '#fff', borderRadius: 8, boxShadow: 'none', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
-            <div style={{ fontSize: 24, fontWeight: 600, marginBottom: 24, letterSpacing: 0.01 }}>Projects</div>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '48px 0 0 0', background: darkMode ? '#181a20' : '#fafbfc' }}>
+          <div style={{ background: darkMode ? '#23242a' : '#fff', borderRadius: 8, boxShadow: 'none', padding: '32px 36px', minWidth: 600, maxWidth: 800, width: '100%' }}>
+            <div style={{ fontSize: 24, fontWeight: 600, marginBottom: 24, letterSpacing: 0.01, color: darkMode ? '#ededed' : '#222' }}>Projects</div>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16, color: darkMode ? '#ededed' : '#222' }}>
               <thead>
-                <tr style={{ color: '#888', fontWeight: 500, fontSize: 15, borderBottom: '1px solid #e5e7eb' }}>
+                <tr style={{ color: darkMode ? '#aab0bb' : '#888', fontWeight: 500, fontSize: 15, borderBottom: darkMode ? '1px solid #23242a' : '1px solid #e5e7eb' }}>
                   <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>PROJECT</th>
                   <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>TYPE</th>
                   <th style={{ textAlign: 'left', padding: '8px 0', fontWeight: 500 }}>WORK FORCE</th>
@@ -390,11 +391,11 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ borderBottom: '1px solid #f1f1f1' }}>
-                  <td style={{ padding: '12px 0', fontWeight: 500, color: '#222' }}>[Sample] Image Annotation Project</td>
-                  <td style={{ padding: '12px 0', color: '#222' }}>General Image Annotation</td>
-                  <td style={{ padding: '12px 0', color: '#222' }}>studio</td>
-                  <td style={{ padding: '12px 0', color: '#3b82f6', fontWeight: 500, cursor: 'pointer' }}>View</td>
+                <tr style={{ borderBottom: darkMode ? '1px solid #23242a' : '1px solid #f1f1f1' }}>
+                  <td style={{ padding: '12px 0', fontWeight: 500, color: darkMode ? '#ededed' : '#222' }}>[Sample] Image Annotation Project</td>
+                  <td style={{ padding: '12px 0', color: darkMode ? '#ededed' : '#222' }}>General Image Annotation</td>
+                  <td style={{ padding: '12px 0', color: darkMode ? '#ededed' : '#222' }}>studio</td>
+                  <td style={{ padding: '12px 0', color: '#8b7bfa', fontWeight: 500, cursor: 'pointer' }}>View</td>
                 </tr>
               </tbody>
             </table>
