@@ -3,12 +3,17 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import { useSearchParams } from 'next/navigation';
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const [showLogoutNotice, setShowLogoutNotice] = useState(
+    searchParams ? searchParams.get('logout') === '1' : false
+  );
 
   useEffect(() => {
     const gradient = darkMode
@@ -283,6 +288,42 @@ export default function Home() {
         boxSizing: 'border-box' as const,
       }}
     >
+      {/* Logout success notification */}
+      {showLogoutNotice && (
+        <div style={{
+          position: 'absolute',
+          top: 32,
+          left: 0,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 1000,
+        }}>
+          <div style={{
+            background: '#eaf4fb',
+            color: '#222',
+            borderRadius: 12,
+            boxShadow: '0 2px 16px 0 rgba(16,20,30,0.10)',
+            padding: '16px 32px 16px 20px',
+            display: 'flex',
+            alignItems: 'center',
+            minWidth: 340,
+            maxWidth: 420,
+            fontSize: 16,
+            fontWeight: 500,
+            gap: 16,
+          }}>
+            {/* Info icon */}
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 6 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#3b82f6" fillOpacity="0.13"/><circle cx="12" cy="12" r="9" stroke="#3b82f6" strokeWidth="1.5"/><rect x="11.25" y="10.5" width="1.5" height="5" rx="0.75" fill="#3b82f6"/><rect x="11.25" y="7" width="1.5" height="1.5" rx="0.75" fill="#3b82f6"/></svg>
+            </span>
+            <span style={{ flex: 1 }}>You have successfully logged out.</span>
+            <button onClick={() => setShowLogoutNotice(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', marginLeft: 8, padding: 0, display: 'flex', alignItems: 'center' }} aria-label="Close notification">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#222" fillOpacity="0.07"/><path d="M15 9l-6 6M9 9l6 6" stroke="#222" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      )}
       {/* Header with clonet. in ibrand font */}
       <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
