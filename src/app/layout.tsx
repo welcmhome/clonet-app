@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preload" href="/fonts/ibrand.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/ibrand.otf?v=1" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -44,14 +44,35 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{
           __html: `
-            // Check if ibrand font is loaded
-            document.fonts.ready.then(function() {
-              if (document.fonts.check('1em ibrand')) {
-                console.log('✅ ibrand font is available');
-              } else {
-                console.log('❌ ibrand font not available');
-              }
-            });
+            // Enhanced font loading with cache busting
+            (function() {
+              // Force font reload
+              var fontUrl = '/fonts/ibrand.otf?v=' + Date.now();
+              var font = new FontFace('ibrand', 'url(' + fontUrl + ')');
+              
+              font.load().then(function(loadedFont) {
+                document.fonts.add(loadedFont);
+                console.log('✅ ibrand font loaded successfully');
+                
+                // Force re-render of clonet logo
+                var logoElements = document.querySelectorAll('.clonet-logo, [data-font="ibrand"]');
+                logoElements.forEach(function(el) {
+                  el.style.fontFamily = 'ibrand';
+                  el.style.fontFamily = 'ibrand !important';
+                });
+              }).catch(function(error) {
+                console.log('❌ ibrand font failed to load:', error);
+              });
+              
+              // Also check if font is available
+              document.fonts.ready.then(function() {
+                if (document.fonts.check('1em ibrand')) {
+                  console.log('✅ ibrand font is available');
+                } else {
+                  console.log('❌ ibrand font not available');
+                }
+              });
+            })();
           `
         }} />
       </head>
