@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with rounded corners -->
+  <rect width="32" height="32" rx="8" fill="#1a2e2e"/>
+  
+  <!-- Ghost body -->
+  <path d="M16 6C12 6 9 9 9 13C9 17 12 20 16 20C20 20 23 17 23 13C23 9 20 6 16 6ZM16 18C13 18 11 16 11 13C11 10 13 8 16 8C19 8 21 10 21 13C21 16 19 18 16 18Z" fill="#e8e8e8"/>
+  
+  <!-- Ghost bottom wavy part -->
+  <path d="M12 18C12 20 14 22 16 22C18 22 20 20 20 18L18 18C18 19 17 20 16 20C15 20 14 19 14 18L12 18Z" fill="#e8e8e8"/>
+  
+  <!-- Ghost antenna -->
+  <circle cx="16" cy="8" r="1" fill="#e8e8e8"/>
+  
+  <!-- Eyes -->
+  <circle cx="14" cy="12" r="1.5" fill="#000000"/>
+  <circle cx="18" cy="12" r="1.5" fill="#000000"/>
+  
+  <!-- Smile -->
+  <path d="M14 15Q16 17 18 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg> 
