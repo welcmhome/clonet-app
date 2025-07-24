@@ -413,6 +413,7 @@ export default function Home() {
             margin-left: 0 !important;
             margin-top: 0 !important;
             font-size: 24px !important;
+            font-family: 'ibrand, sans-serif' !important;
           }
           .header-signup {
             position: static !important;
