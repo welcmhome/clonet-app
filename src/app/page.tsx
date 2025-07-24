@@ -327,7 +327,7 @@ export default function Home() {
       {/* Header with clonet. in ibrand font */}
       <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
+          <span className="clonet-logo" style={{ fontFamily: 'ibrand, Orbitron, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
       </div>
       {/* Main content */}
@@ -398,6 +398,19 @@ export default function Home() {
           box-shadow: 0 1px 2px 0 rgba(16,20,30,0.04);
           transform: scale(0.997);
         }
+        
+        /* High specificity rules for clonet logo font */
+        .clonet-logo {
+          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+        }
+        
+        .header-row .clonet-logo {
+          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+        }
+        
+        .header-row a .clonet-logo {
+          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+        }
       `}</style>
       <style jsx>{`
         @media (max-width: 600px) {
@@ -413,7 +426,10 @@ export default function Home() {
             margin-left: 0 !important;
             margin-top: 0 !important;
             font-size: 24px !important;
-            font-family: 'ibrand, sans-serif' !important;
+          }
+          .clonet-logo {
+            font-family: 'ibrand', 'Orbitron', sans-serif !important;
+            font-size: 24px !important;
           }
           .header-signup {
             position: static !important;

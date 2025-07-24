@@ -35,6 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preload" href="/fonts/ibrand.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/ibrand.otf" as="font" type="font/otf" crossOrigin="anonymous" fetchPriority="high" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -45,15 +46,24 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{
           __html: `
-            // Debug font loading
-            document.fonts.ready.then(function() {
-              console.log('Fonts loaded:', document.fonts.check('1em ibrand'));
-              if (document.fonts.check('1em ibrand')) {
-                console.log('✅ ibrand font is available');
-              } else {
-                console.log('❌ ibrand font failed to load, using fallback');
-              }
-            });
+            // Enhanced font loading with fallback
+            (function() {
+              var font = new FontFace('ibrand', 'url(/fonts/ibrand.otf)');
+              font.load().then(function(loadedFont) {
+                document.fonts.add(loadedFont);
+                console.log('✅ ibrand font loaded successfully');
+                // Force re-render of elements using ibrand font
+                document.querySelectorAll('[style*="ibrand"]').forEach(function(el) {
+                  el.style.fontFamily = 'ibrand, sans-serif';
+                });
+              }).catch(function(error) {
+                console.log('❌ ibrand font failed to load:', error);
+                // Use fallback font
+                document.querySelectorAll('[style*="ibrand"]').forEach(function(el) {
+                  el.style.fontFamily = 'Orbitron, sans-serif';
+                });
+              });
+            })();
           `
         }} />
       </head>

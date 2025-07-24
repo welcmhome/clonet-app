@@ -6,7 +6,15 @@
   src: url('/fonts/ibrand.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
+}
+
+/* Fallback for when ibrand font fails to load */
+@font-face {
+  font-family: 'ibrand-fallback';
+  src: local('Arial'), local('Helvetica'), local('sans-serif');
+  font-weight: normal;
+  font-style: normal;
 }
 
 :root {
