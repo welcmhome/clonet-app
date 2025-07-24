@@ -42,6 +42,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{
           __html: `
             // Debug font loading
@@ -50,7 +51,7 @@ export default function RootLayout({
               if (document.fonts.check('1em ibrand')) {
                 console.log('✅ ibrand font is available');
               } else {
-                console.log('❌ ibrand font failed to load');
+                console.log('❌ ibrand font failed to load, using fallback');
               }
             });
           `
