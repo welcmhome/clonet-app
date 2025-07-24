@@ -327,7 +327,23 @@ export default function Home() {
       {/* Header with clonet. in ibrand font */}
       <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <span className="ibrand-font" style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
+          <span 
+            className="ibrand-font debug-font" 
+            style={{ 
+              fontFamily: 'ibrand, Arial, sans-serif !important', 
+              fontWeight: 400, 
+              fontSize: 28, 
+              marginTop: 24, 
+              marginLeft: 0, 
+              marginBottom: 8, 
+              letterSpacing: '0.01em', 
+              lineHeight: 1.1, 
+              display: 'inline-block', 
+              color: 'inherit'
+            }}
+          >
+            clonet.
+          </span>
         </a>
       </div>
       {/* Main content */}
