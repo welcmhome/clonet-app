@@ -327,7 +327,7 @@ export default function Home() {
       {/* Header with clonet. in ibrand font */}
       <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <span className="clonet-logo" data-font="ibrand" style={{ fontFamily: 'ibrand', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
+          <span style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
       </div>
       {/* Main content */}
@@ -398,33 +398,6 @@ export default function Home() {
           box-shadow: 0 1px 2px 0 rgba(16,20,30,0.04);
           transform: scale(0.997);
         }
-        
-        .clonet-logo {
-          font-family: ibrand !important;
-        }
-        
-        [data-font="ibrand"] {
-          font-family: ibrand !important;
-        }
-        
-        /* Force ibrand font on all screen sizes */
-        @media (max-width: 600px) {
-          .clonet-logo {
-            font-family: ibrand !important;
-          }
-          [data-font="ibrand"] {
-            font-family: ibrand !important;
-          }
-        }
-        
-        @media (min-width: 601px) {
-          .clonet-logo {
-            font-family: ibrand !important;
-          }
-          [data-font="ibrand"] {
-            font-family: ibrand !important;
-          }
-        }
       `}</style>
       <style jsx>{`
         @media (max-width: 600px) {
@@ -433,23 +406,13 @@ export default function Home() {
             height: 64px !important;
             display: flex !important;
             align-items: center !important;
-            justify-content: flex-start !important;
+            justify-content: space-between !important;
             position: relative !important;
-          }
-          .header-row a {
-            display: flex !important;
-            align-items: center !important;
           }
           .header-row a span {
             margin-left: 0 !important;
             margin-top: 0 !important;
             font-size: 24px !important;
-            display: inline-block !important;
-          }
-          .clonet-logo {
-            font-family: ibrand !important;
-            font-size: 24px !important;
-            display: inline-block !important;
           }
           .header-signup {
             position: static !important;
