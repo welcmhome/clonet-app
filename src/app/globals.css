@@ -6,6 +6,12 @@
   src: url('/fonts/ibrand.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
+}
+
+/* Fallback font stack for ibrand */
+.ibrand-font {
+  font-family: 'ibrand', 'Switzer', 'Arial', sans-serif;
   font-display: swap;
 }
 
