@@ -43,25 +43,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{
           __html: `
-            // Enhanced font loading with fallback
+            // Enhanced font loading for ibrand only
             (function() {
               var font = new FontFace('ibrand', 'url(/fonts/ibrand.otf)');
               font.load().then(function(loadedFont) {
                 document.fonts.add(loadedFont);
                 console.log('✅ ibrand font loaded successfully');
                 // Force re-render of elements using ibrand font
-                document.querySelectorAll('[style*="ibrand"]').forEach(function(el) {
+                document.querySelectorAll('.clonet-logo').forEach(function(el) {
                   el.style.fontFamily = 'ibrand, sans-serif';
                 });
               }).catch(function(error) {
                 console.log('❌ ibrand font failed to load:', error);
-                // Use fallback font
-                document.querySelectorAll('[style*="ibrand"]').forEach(function(el) {
-                  el.style.fontFamily = 'Orbitron, sans-serif';
-                });
               });
             })();
           `

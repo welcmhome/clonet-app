@@ -327,7 +327,7 @@ export default function Home() {
       {/* Header with clonet. in ibrand font */}
       <div className="header-row" style={{ width: '100%', display: 'flex', alignItems: 'center', height: 80, padding: '0 40px', boxSizing: 'border-box' as const, fontFamily: 'Switzer, sans-serif', position: 'relative' as const }}>
         <a href="https://clonet.ai" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <span className="clonet-logo" style={{ fontFamily: 'ibrand, Orbitron, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
+          <span className="clonet-logo" style={{ fontFamily: 'ibrand, sans-serif', fontWeight: 400, fontSize: 28, marginTop: 24, marginLeft: 0, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.1, display: 'inline-block', color: 'inherit' }}>clonet.</span>
         </a>
       </div>
       {/* Main content */}
@@ -401,15 +401,15 @@ export default function Home() {
         
         /* High specificity rules for clonet logo font */
         .clonet-logo {
-          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+          font-family: 'ibrand', sans-serif !important;
         }
         
         .header-row .clonet-logo {
-          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+          font-family: 'ibrand', sans-serif !important;
         }
         
         .header-row a .clonet-logo {
-          font-family: 'ibrand', 'Orbitron', sans-serif !important;
+          font-family: 'ibrand', sans-serif !important;
         }
       `}</style>
       <style jsx>{`
@@ -428,7 +428,7 @@ export default function Home() {
             font-size: 24px !important;
           }
           .clonet-logo {
-            font-family: 'ibrand', 'Orbitron', sans-serif !important;
+            font-family: 'ibrand', sans-serif !important;
             font-size: 24px !important;
           }
           .header-signup {
