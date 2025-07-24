@@ -1,47 +1,12 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Switzer:wght@400;600;700&display=swap');
 
-/* Try multiple approaches for ibrand font */
 @font-face {
   font-family: 'ibrand';
   src: url('/fonts/ibrand.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-}
-
-/* Alternative loading method */
-@font-face {
-  font-family: 'ibrand-alt';
-  src: url('/fonts/ibrand.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-/* Fallback font */
-@font-face {
-  font-family: 'ibrand-fallback';
-  src: local('Arial'), local('Helvetica'), local('sans-serif');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Ensure ibrand font is available globally with multiple fallbacks */
-.ibrand-font {
-  font-family: 'ibrand', 'ibrand-alt', 'Orbitron', 'ibrand-fallback', 'Arial', sans-serif !important;
-  font-display: swap;
-}
-
-/* Debug styles - this will show a red border if the font loads */
-.debug-font {
-  font-family: 'ibrand', 'Orbitron', 'Arial', sans-serif !important;
-  border: 2px solid red;
-}
-
-/* Force font loading with JavaScript fallback */
-.force-ibrand {
-  font-family: 'ibrand', 'Orbitron', 'Arial', sans-serif !important;
 }
 
 :root {
