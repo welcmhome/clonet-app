@@ -433,17 +433,23 @@ export default function Home() {
             height: 64px !important;
             display: flex !important;
             align-items: center !important;
-            justify-content: space-between !important;
+            justify-content: flex-start !important;
             position: relative !important;
+          }
+          .header-row a {
+            display: flex !important;
+            align-items: center !important;
           }
           .header-row a span {
             margin-left: 0 !important;
             margin-top: 0 !important;
             font-size: 24px !important;
+            display: inline-block !important;
           }
           .clonet-logo {
             font-family: ibrand !important;
             font-size: 24px !important;
+            display: inline-block !important;
           }
           .header-signup {
             position: static !important;
