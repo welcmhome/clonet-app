@@ -42,6 +42,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Check if ibrand font is loaded
+            document.fonts.ready.then(function() {
+              if (document.fonts.check('1em ibrand')) {
+                console.log('✅ ibrand font is available');
+              } else {
+                console.log('❌ ibrand font not available');
+              }
+            });
+          `
+        }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
